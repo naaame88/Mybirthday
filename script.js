@@ -32,7 +32,7 @@ function initApp() {
         if (!listContainer) return;
         listContainer.innerHTML = '';
         if (snapshot.empty) {
-            listContainer.innerHTML = '<div class="empty-msg">따뜻한 축하 한마디를 남겨주세요...</div>';
+            listContainer.innerHTML = '<div class="empty-msg">Share your warm whispers of celebration...</div>';
             return;
         }
         snapshot.forEach((doc) => {
@@ -117,7 +117,7 @@ function tryLuckyDraw() {
         }
     } else {
         lockTitle.innerText = "Locked";
-        lockMsg.innerText = "The magic box is locked. Please wait for the countdown!";
+        lockMsg.innerText = "The magic box is locked.<br>Please wait for the countdown!";
         lockModal.style.display = 'flex';
     }
 }
