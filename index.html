@@ -47,8 +47,7 @@
             <h2 class="section-label">Find the Muse's Boots</h2>
             <p class="game-info">하루에 두 번의 기회! 상자를 클릭해 보세요. (기회: <span id="chance-count">2</span>/2)</p>
             
-            <div id="box-grid" class="box-grid">
-                </div>
+            <div id="box-grid" class="box-grid"></div>
         
             <div id="win-modal" class="modal">
                 <div class="modal-content">
@@ -62,6 +61,14 @@
                     <button onclick="closeModal()" class="close-btn">Close</button>
                 </div>
             </div>
+
+            <div id="lock-modal" class="modal">
+                <div class="modal-content">
+                    <h2 id="lock-title" class="win-title">Locked</h2>
+                    <p id="lock-msg" class="win-msg"></p>
+                    <button onclick="closeLockModal()" class="close-btn">Close</button>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -70,7 +77,6 @@
         import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } 
         from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
       
-        // 본인의 Firebase 콘솔 -> 프로젝트 설정 -> 내 앱에서 복사한 설정값 붙여넣기
         const firebaseConfig = {
             apiKey: "AIzaSyAQoqqWhV1PPZoU_rMt2sK2BbDtWO-qlmI",
             authDomain: "my-birthday-site-6e2cd.firebaseapp.com",
@@ -81,15 +87,13 @@
             measurementId: "G-TZDVRDFY54"
         };
       
-        // Firebase 초기화
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
       
-        // script.js에서 사용할 수 있도록 전역 변수 설정
         window.db = db;
         window.fbUtils = { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp };
-      </script>
+    </script>
       
-      <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
