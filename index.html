@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ethereal Birthday | 01.28</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500&family=Montserrat:wght@300&family=Nanum+Myeongjo&family=Pinyon+Script&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="feather-cursor"></div>
+
+    <main class="container">
+        <header>
+            <h1 class="main-title">ETHEREAL BIRTHDAY</h1>
+            <p class="sub-title">Jan 28, Celebrating the Winter Muse</p>
+        </header>
+
+        <section class="hero">
+            <div class="countdown" id="countdown">D-00 : 00 : 00 : 00</div>
+            <div class="image-frame">
+                <img src="boots.png" alt="Winter Boots" class="floating-boots">
+            </div>
+        </section>
+
+        <section class="interaction">
+            <button id="lucky-button" class="btn-pink" onclick="tryLuckyDraw()">Unlock the Secret Box</button>
+            <p id="lucky-timer-msg">Next Magic starts at 01:28</p>
+        </section>
+
+        <section class="guestbook-section">
+            <h2 class="section-label">Whispers to Muse</h2>
+            
+            <div id="guestbook-list" class="simple-list">
+                <div class="empty-msg">Be the first to leave a whisper...</div>
+            </div>
+        
+            <div class="input-container">
+                <input type="text" id="visitor-name" placeholder="Name" class="input-field name-input">
+                <textarea id="guest-input" placeholder="Leave your birthday whispers here..." class="input-field text-input" rows="4"></textarea>
+                <button onclick="addMessage()" class="write-btn">Write</button>
+            </div>
+        </section>
+
+        <section class="lucky-game-section">
+            <h2 class="section-label">Find the Muse's Boots</h2>
+            <p class="game-info">하루에 두 번의 기회! 상자를 클릭해 보세요. (기회: <span id="chance-count">2</span>/2)</p>
+            
+            <div id="box-grid" class="box-grid">
+                </div>
+        
+            <div id="win-modal" class="modal">
+                <div class="modal-content">
+                    <h2 class="win-title">JACKPOT!</h2>
+                    <div class="win-img-frame">
+                        <img src="boots.png" alt="Winning Boots">
+                    </div>
+                    <p class="win-msg">부츠를 찾으셨습니다!</p>
+                    <div id="win-time-display" class="win-time"></div>
+                    <p class="win-instruction">위 당첨 시각이 보이도록 캡쳐하여<br>카페 댓글로 인증해 주세요!</p>
+                    <button onclick="closeModal()" class="close-btn">Close</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } 
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+      
+        // 본인의 Firebase 콘솔 -> 프로젝트 설정 -> 내 앱에서 복사한 설정값 붙여넣기
+        const firebaseConfig = {
+            apiKey: "AIzaSyAQoqqWhV1PPZoU_rMt2sK2BbDtWO-qlmI",
+            authDomain: "my-birthday-site-6e2cd.firebaseapp.com",
+            projectId: "my-birthday-site-6e2cd",
+            storageBucket: "my-birthday-site-6e2cd.firebasestorage.app",
+            messagingSenderId: "545429691530",
+            appId: "1:545429691530:web:ffd621005d4e39cc35e173",
+            measurementId: "G-TZDVRDFY54"
+        };
+      
+        // Firebase 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+      
+        // script.js에서 사용할 수 있도록 전역 변수 설정
+        window.db = db;
+        window.fbUtils = { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp };
+      </script>
+      
+      <script src="script.js"></script>
+</body>
+</html>

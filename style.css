@@ -1,0 +1,350 @@
+/* -----------------------------------------------------------
+   1. Global Styles & Fonts
+----------------------------------------------------------- */
+:root {
+    --bg-color: #F9F8F5;       /* 전체 배경: 따뜻한 미색 */
+    --point-pink: #EBD8D8;     /* 포인트 컬러: 더스티 핑크 */
+    --accent-grey: #A68A8A;    /* 강조색: 차분한 그레이 핑크 */
+    --text-main: #7A7A7A;      /* 기본 텍스트 색상 */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+    touch-action: manipulation;
+}
+
+/* 깃털 커서 (PC용) */
+#feather-cursor {
+    width: 35px;
+    height: 35px;
+    background: url('feather.png') no-repeat center/contain;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+@media (min-width: 1024px) { 
+    #feather-cursor { display: block; } 
+}
+
+/* -----------------------------------------------------------
+   2. Layout Container
+----------------------------------------------------------- */
+.container {
+    width: 100%;
+    max-width: 430px;
+    min-height: 100vh;
+    padding: 60px 20px 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.nav-links {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-around;
+    opacity: 0.6;
+}
+
+/* -----------------------------------------------------------
+   3. Typography
+----------------------------------------------------------- */
+.main-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.sub-title {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 1.3rem;
+    color: var(--accent-grey);
+    margin-top: 5px;
+}
+
+/* -----------------------------------------------------------
+   4. Hero Section (Boots & Countdown)
+----------------------------------------------------------- */
+.hero {
+    margin: 40px 0;
+}
+
+.countdown {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.image-frame {
+    width: 240px;
+    height: 340px;
+    margin: 0 auto;
+    border: 0.5px solid rgba(209, 194, 194, 0.5);
+    border-radius: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, rgba(235,216,216,0.3) 0%, rgba(249,248,245,0) 70%);
+}
+
+.floating-boots {
+    width: 85%;
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+/* -----------------------------------------------------------
+   5. Interaction (Lucky Draw) - 수정된 부분
+----------------------------------------------------------- */
+.interaction {
+    margin-bottom: 50px;
+}
+
+.btn-pink {
+    background-color: var(--point-pink);
+    color: white;
+    border: none;
+    padding: 14px 35px;
+    border-radius: 25px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(235, 216, 216, 0.4);
+    transition: 0.3s;
+}
+
+/* 시크릿 박스 타이머 스타일 (Next Magic 문구 대체) */
+#lucky-timer-msg {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    margin-top: 15px;
+    color: var(--accent-grey);
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+/* -----------------------------------------------------------
+   6. Guestbook Section
+----------------------------------------------------------- */
+.guestbook-section {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 40px;
+    text-align: left;
+}
+
+.section-label {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    margin-bottom: 30px;
+}
+
+.simple-list {
+    max-height: 350px;
+    overflow-y: auto;
+    margin-bottom: 30px;
+    padding: 0 10px;
+}
+
+.message-item {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px dotted var(--point-pink);
+    animation: fadeIn 0.6s ease-out;
+}
+
+.msg-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--accent-grey);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.msg-text {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-top: 8px;
+    color: #555;
+    word-break: break-all;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.input-field {
+    border: none;
+    border-bottom: 1px solid var(--point-pink);
+    background: transparent;
+    padding: 10px 5px;
+    font-family: 'Nanum Myeongjo', serif;
+    outline: none;
+    color: var(--text-main);
+}
+
+.name-input {
+    width: 40%;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+}
+
+.text-input {
+    resize: none;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.write-btn {
+    align-self: flex-end;
+    background-color: transparent;
+    border: 1px solid var(--point-pink);
+    color: var(--accent-grey);
+    padding: 8px 25px;
+    border-radius: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* -----------------------------------------------------------
+   7. Lucky Boots Game Section
+----------------------------------------------------------- */
+.lucky-game-section {
+    margin-top: 50px;
+    padding: 30px 15px;
+    background: rgba(235, 216, 216, 0.15);
+    border-radius: 25px;
+    text-align: center;
+}
+
+.game-info {
+    font-size: 0.8rem;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+.box-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.box-item {
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-item img {
+    width: 100%;
+    max-width: 100px;
+    display: block;
+    transition: opacity 0.4s, transform 0.4s;
+    z-index: 2;
+}
+
+.box-item.opened img {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+
+.result-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--accent-grey);
+    z-index: 1;
+}
+
+/* 팝업 모달 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 10000;
+    align-items: center; 
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    width: 80%; 
+    max-width: 320px;
+    padding: 30px 20px;
+    border-radius: 20px;
+    text-align: center;
+    animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.win-time {
+    background: #f4f4f4;
+    padding: 12px;
+    margin: 20px 0;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 0.85rem;
+    color: #333;
+    border-radius: 8px;
+    border: 1px dashed var(--point-pink);
+}
+
+.win-img-frame img {
+    width: 100px;
+    margin-bottom: 15px;
+}
+
+.close-btn {
+    margin-top: 20px;
+    background-color: var(--point-pink);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes modalPop {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.simple-list::-webkit-scrollbar { width: 3px; }
+.simple-list::-webkit-scrollbar-thumb { background-color: var(--point-pink); border-radius: 10px; }
