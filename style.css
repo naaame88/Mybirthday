@@ -321,6 +321,13 @@ body {
     animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+.win-msg { 
+    font-size: 0.85rem;  /* 글자 크기를 기존보다 줄임 */
+    line-height: 1.8;    /* 줄 간격을 넓게 유지하여 가독성 확보 */
+    color: #555; 
+    word-break: keep-all; /* 단어 단위로 줄바꿈되어 더 깔끔하게 보임 */
+}
+
 .win-time {
     background: #f4f4f4;
     padding: 12px;
