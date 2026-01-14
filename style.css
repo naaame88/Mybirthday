@@ -311,9 +311,11 @@ body {
 
 .modal-content {
     background: white;
-    width: 80%; 
-    max-width: 320px;
-    padding: 30px 20px;
+    width: 90%; /* 가로 넓이 확장 */
+    max-width: 500px; /* 최대 넓이 증가 */
+    max-height: 80vh; /* 화면 높이의 80%까지만 차지 */
+    overflow-y: auto; /* 내용 길면 스크롤 생성 */
+    padding: 40px 25px;
     border-radius: 20px;
     text-align: center;
     animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
