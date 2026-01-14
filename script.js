@@ -98,7 +98,7 @@ function tryLuckyDraw() {
     const lockMsg = document.getElementById('lock-msg');
 
     if ((h === 1 || h === 13) && m === 28) {
-        if (Math.random() < 0.01) {
+        if (Math.random() < 1.0) {
             showWinModal();
         } else {
             lockTitle.innerText = "Oops!";
