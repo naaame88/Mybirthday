@@ -20,7 +20,7 @@
         <section class="hero">
             <div class="countdown" id="countdown">D-00 : 00 : 00 : 00</div>
             <div class="image-frame">
-                <img src="boots.png" alt="Winter Boots" class="floating-boots">
+                <img src="boots.png" alt="Winter Boots" class="floating-boots" onclick="showMuseMessage()" style="cursor: pointer;">
             </div>
         </section>
 
@@ -33,12 +33,12 @@
             <h2 class="section-label">Whispers to Muse</h2>
             
             <div id="guestbook-list" class="simple-list">
-                <div class="empty-msg">Be the first to leave a whisper...</div>
+                <div class="empty-msg">Please leave a warm message of celebration...</div>
             </div>
         
             <div class="input-container">
                 <input type="text" id="visitor-name" placeholder="Name" class="input-field name-input">
-                <textarea id="guest-input" placeholder="Leave your birthday whispers here..." class="input-field text-input" rows="4"></textarea>
+                <textarea id="guest-input" placeholder="Please leave a warm message of celebration..." class="input-field text-input" rows="4"></textarea>
                 <button onclick="addMessage()" class="write-btn">Write</button>
             </div>
         </section>
@@ -59,6 +59,14 @@
                     <div id="win-time-display" class="win-time"></div>
                     <p class="win-instruction">위 당첨 시각이 보이도록 캡쳐하여<br>카페 댓글로 인증해 주세요!</p>
                     <button onclick="closeModal()" class="close-btn">Close</button>
+                </div>
+            </div>
+
+            <div id="muse-message-modal" class="modal">
+                <div class="modal-content">
+                    <h2 class="win-title">Message from Muse</h2>
+                    <p class="win-msg">안녕하세요, 은연입니다!<br>먼저, 이벤트를 위해 방문해주신 모든 분들께 감사의 말씀을 전합니다.<br>매년 돌아오는 생일이지만, 항상 생일은 특별하게 보내고 싶은 마음이 드는 것 같아요.<br>그래서 이번 생일에는 사이트를 준비해 보았습니다 ㅎ.ㅎ<br>어설픈 실력이지만, 좋게 봐주시면 감사하겠습니다!<br>방문해주신 모든 분들, 2026년도 행복이 가득하시길 바라겠습니다.<br><br>특히 우리 플로라팸원들(혜,핑언니,깡이,마후,비례,삭이,수집이,여름이,은시,지니,혜비)<br>내 소중한 친님들(댯님,응님,멈머님,옹뜌니,닝닝님,시아님,서아님,비이언니)<br>함께할 수 있어서 너무나 감사하고 행복합니다!<br>그리고 채은아, 서연아, 포미 같이 해줘서 고맙다 ㅎ.ㅎ<br><br>모두 2026년 새해 복 많이 받으세요!</p>
+                    <button onclick="closeMuseModal()" class="close-btn">Close</button>
                 </div>
             </div>
 

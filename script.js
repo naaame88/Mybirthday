@@ -1,8 +1,7 @@
-/* --- Firebase 및 앱 초기화 --- */
+// script.js 전체
+
 function initApp() {
     const { db, fbUtils } = window;
-
-    // Firebase가 아직 준비되지 않았다면 0.1초 후 다시 시도
     if (!db || !fbUtils) {
         setTimeout(initApp, 100);
         return;
@@ -10,7 +9,6 @@ function initApp() {
 
     const guestbookCol = fbUtils.collection(db, "guestbook");
 
-    // 1. 커서 추적 (PC 전용)
     const cursor = document.getElementById('feather-cursor');
     if (cursor) {
         document.addEventListener('mousemove', (e) => {
@@ -19,20 +17,16 @@ function initApp() {
         });
     }
 
-    // 2. 메인 카운트다운
     setInterval(updateCountdown, 1000);
-
-    // 3. 시크릿 박스 타이머
     setInterval(updateLuckyTimer, 1000);
 
-    // 4. 실시간 방명록 불러오기
     const q = fbUtils.query(guestbookCol, fbUtils.orderBy("timestamp", "desc"));
     fbUtils.onSnapshot(q, (snapshot) => {
         const listContainer = document.getElementById('guestbook-list');
         if (!listContainer) return;
         listContainer.innerHTML = '';
         if (snapshot.empty) {
-            listContainer.innerHTML = '<div class="empty-msg">Share your warm whispers of celebration...</div>';
+            listContainer.innerHTML = '<div class="empty-msg">Please leave a warm message of celebration...</div>';
             return;
         }
         snapshot.forEach((doc) => {
@@ -44,7 +38,6 @@ function initApp() {
         });
     });
 
-    // 5. 방명록 쓰기 함수 등록
     window.addMessage = async function() {
         const nameInput = document.getElementById('visitor-name');
         const msgInput = document.getElementById('guest-input');
@@ -60,11 +53,8 @@ function initApp() {
         } catch (e) { console.error("Error: ", e); }
     };
 
-    // 6. 게임판 생성
     createBoxGrid();
 }
-
-/* --- 각 기능별 세부 함수 --- */
 
 function updateCountdown() {
     const now = new Date();
@@ -112,12 +102,14 @@ function tryLuckyDraw() {
             showWinModal();
         } else {
             lockTitle.innerText = "Oops!";
-            lockMsg.innerText = "The muse is shy. Try again!";
+            // innerHTML로 변경하여 <br> 적용
+            lockMsg.innerHTML = "The muse is shy.<br>Try again!"; 
             lockModal.style.display = 'flex';
         }
     } else {
         lockTitle.innerText = "Locked";
-        lockMsg.innerText = "The magic box is locked.<br>Please wait for the countdown!";
+        // innerHTML로 변경하여 <br> 적용
+        lockMsg.innerHTML = "The magic box is locked.<br>Please wait for the countdown!"; 
         lockModal.style.display = 'flex';
     }
 }
@@ -159,8 +151,16 @@ function showWinModal() {
     document.getElementById('win-modal').style.display = 'flex';
 }
 
+// 부츠 메시지 팝업 관련 함수 추가
+function showMuseMessage() {
+    document.getElementById('muse-message-modal').style.display = 'flex';
+}
+
+function closeMuseModal() {
+    document.getElementById('muse-message-modal').style.display = 'none';
+}
+
 function closeModal() { document.getElementById('win-modal').style.display = 'none'; }
 function closeLockModal() { document.getElementById('lock-modal').style.display = 'none'; }
 
-// 앱 실행
 initApp();
