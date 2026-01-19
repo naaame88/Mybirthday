@@ -1,11 +1,7 @@
-// script.js 전체
-
+/* script.js */
 function initApp() {
     const { db, fbUtils } = window;
-    if (!db || !fbUtils) {
-        setTimeout(initApp, 100);
-        return;
-    }
+    if (!db || !fbUtils) { setTimeout(initApp, 100); return; }
 
     const guestbookCol = fbUtils.collection(db, "guestbook");
 
@@ -42,7 +38,6 @@ function initApp() {
         const nameInput = document.getElementById('visitor-name');
         const msgInput = document.getElementById('guest-input');
         if (!nameInput.value.trim() || !msgInput.value.trim()) return;
-
         try {
             await fbUtils.addDoc(guestbookCol, {
                 name: nameInput.value,
@@ -90,19 +85,80 @@ function updateLuckyTimer() {
 }
 
 function tryLuckyDraw() {
-    const now = new Date();
-    const h = now.getHours();
-    const m = now.getMinutes();
     const lockModal = document.getElementById('lock-modal');
     const lockTitle = document.getElementById('lock-title');
     const lockMsg = document.getElementById('lock-msg');
+    const now = new Date();
+    const h = now.getHours();
+    const m = now.getMinutes();
 
     if ((h === 1 || h === 13) && m === 28) {
-        if (Math.random() < 0.01) {
-            showWinModal();
-        } else {
+        if (Math.random() < 0.01) { showWinModal(); } 
+        else {
             lockTitle.innerText = "Oops!";
-            // innerHTML로 변경하여 <br> 적용
+            lockMsg.innerHTML = "The muse is shy.<br>Try again!"; 
+            lockModal.style.display = 'flex';
+        }
+    } else {
+        lockTitle.innerText = "Locked";
+        lockMsg.innerHTML = "The magic box is locked.<br>Please wait for the countdown!"; 
+        lockModal.style.display = 'flex';
+    }
+}
+
+/* --- 기회 관리 로직 (매일 초기화 추가) --- */
+const today = new Date().toDateString();
+const lastVisit = localStorage.getItem('lastVisitDate');
+let chances;
+
+if (lastVisit !== today) {
+    chances = 2;
+    localStorage.setItem('museChances', chances);
+    localStorage.setItem('lastVisitDate', today);
+} else {
+    chances = localStorage.getItem('museChances') ? parseInt(localStorage.getItem('museChances')) : 2;
+}
+const winIndex = Math.floor(Math.random() * 6);
+
+function createBoxGrid() {
+    const grid = document.getElementById('box-grid');
+    const chanceDisplay = document.getElementById('chance-count');
+    if (chanceDisplay) chanceDisplay.innerText = chances;
+    if (grid) {
+        grid.innerHTML = '';
+        for (let i = 0; i < 6; i++) {
+            const box = document.createElement('div');
+            box.className = 'box-item';
+            box.innerHTML = `<img src="box.png" alt="Box"><span class="result-text">${i === winIndex ? 'WIN!' : 'EMPTY'}</span>`;
+            box.onclick = () => openBox(box, i);
+            grid.appendChild(box);
+        }
+    }
+}
+
+function openBox(element, index) {
+    if (chances <= 0 || element.classList.contains('opened')) return;
+    chances--;
+    localStorage.setItem('museChances', chances);
+    document.getElementById('chance-count').innerText = chances;
+    element.classList.add('opened');
+    if (index === winIndex) setTimeout(showWinModal, 600);
+}
+
+function showWinModal() {
+    const now = new Date();
+    const timeStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+    const display = document.getElementById('win-time-display');
+    if (display) display.innerText = `당첨 시각: ${timeStr}`;
+    document.getElementById('win-modal').style.display = 'flex';
+}
+
+function showMuseMessage() { document.getElementById('muse-message-modal').style.display = 'flex'; }
+function closeMuseModal() { document.getElementById('muse-message-modal').style.display = 'none'; }
+function closeModal() { document.getElementById('win-modal').style.display = 'none'; }
+function closeLockModal() { document.getElementById('lock-modal').style.display = 'none'; }
+
+initApp();
             lockMsg.innerHTML = "The muse is shy.<br>Try again!"; 
             lockModal.style.display = 'flex';
         }
@@ -162,5 +218,6 @@ function closeMuseModal() {
 
 function closeModal() { document.getElementById('win-modal').style.display = 'none'; }
 function closeLockModal() { document.getElementById('lock-modal').style.display = 'none'; }
+
 
 initApp();
