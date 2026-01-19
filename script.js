@@ -155,7 +155,7 @@ function tryLuckyDraw() {
     const m = now.getMinutes();
 
     if ((h === 1 || h === 13) && m === 28) {
-        if (Math.random() < 0.01) { showWinModal(); } 
+        if (Math.random() < 0.0001) { showWinModal(); } 
         else {
             lockTitle.innerText = "Oops!";
             lockMsg.innerHTML = "The muse is shy.<br>Try again!"; 
@@ -183,4 +183,5 @@ function closeLockModal() { document.getElementById('lock-modal').style.display 
 
 // 앱 실행
 initApp();
+
 
