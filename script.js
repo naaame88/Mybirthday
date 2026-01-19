@@ -1,3 +1,9 @@
+// script.js 맨 위에 임시로 추가
+window.onerror = function(msg, url, line) {
+    alert("에러 발생: " + msg + "\n위치: " + line + "번 줄");
+    return false;
+};
+
 /* --- 전역 변수 설정 --- */
 let chances;
 let winIndex = Math.floor(Math.random() * 6);
@@ -177,3 +183,4 @@ function closeLockModal() { document.getElementById('lock-modal').style.display 
 
 // 앱 실행
 initApp();
+
