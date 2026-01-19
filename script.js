@@ -5,6 +5,7 @@ function initApp() {
 
     const guestbookCol = fbUtils.collection(db, "guestbook");
 
+    // 1. 커서 추적
     const cursor = document.getElementById('feather-cursor');
     if (cursor) {
         document.addEventListener('mousemove', (e) => {
@@ -13,9 +14,11 @@ function initApp() {
         });
     }
 
+    // 2. 타이머들
     setInterval(updateCountdown, 1000);
     setInterval(updateLuckyTimer, 1000);
 
+    // 3. 방명록 로직
     const q = fbUtils.query(guestbookCol, fbUtils.orderBy("timestamp", "desc"));
     fbUtils.onSnapshot(q, (snapshot) => {
         const listContainer = document.getElementById('guestbook-list');
@@ -48,9 +51,56 @@ function initApp() {
         } catch (e) { console.error("Error: ", e); }
     };
 
+    // 4. 기회 초기화 및 박스 그리드 생성 (중요: 실행 순서 보장)
+    handleChancesAndGrid();
+}
+
+// 기회 관리 전역 변수
+let chances;
+let winIndex = Math.floor(Math.random() * 6);
+
+function handleChancesAndGrid() {
+    const today = new Date().toDateString();
+    const lastVisit = localStorage.getItem('lastVisitDate');
+    
+    if (lastVisit !== today) {
+        chances = 2;
+        localStorage.setItem('museChances', chances);
+        localStorage.setItem('lastVisitDate', today);
+    } else {
+        chances = localStorage.getItem('museChances') ? parseInt(localStorage.getItem('museChances')) : 2;
+    }
+    
     createBoxGrid();
 }
 
+function createBoxGrid() {
+    const grid = document.getElementById('box-grid');
+    const chanceDisplay = document.getElementById('chance-count');
+    if (chanceDisplay) chanceDisplay.innerText = chances;
+    
+    if (grid) {
+        grid.innerHTML = '';
+        for (let i = 0; i < 6; i++) {
+            const box = document.createElement('div');
+            box.className = 'box-item';
+            box.innerHTML = `<img src="box.png" alt="Box"><span class="result-text">${i === winIndex ? 'WIN!' : 'EMPTY'}</span>`;
+            box.onclick = () => openBox(box, i);
+            grid.appendChild(box);
+        }
+    }
+}
+
+function openBox(element, index) {
+    if (chances <= 0 || element.classList.contains('opened')) return;
+    chances--;
+    localStorage.setItem('museChances', chances);
+    document.getElementById('chance-count').innerText = chances;
+    element.classList.add('opened');
+    if (index === winIndex) setTimeout(showWinModal, 600);
+}
+
+// 나머지 함수들 (기존과 동일)
 function updateCountdown() {
     const now = new Date();
     let target = new Date(now.getFullYear(), 0, 28);
@@ -103,6 +153,23 @@ function tryLuckyDraw() {
         lockTitle.innerText = "Locked";
         lockMsg.innerHTML = "The magic box is locked.<br>Please wait for the countdown!"; 
         lockModal.style.display = 'flex';
+    }
+}
+
+function showWinModal() {
+    const now = new Date();
+    const timeStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+    const display = document.getElementById('win-time-display');
+    if (display) display.innerText = `당첨 시각: ${timeStr}`;
+    document.getElementById('win-modal').style.display = 'flex';
+}
+
+function showMuseMessage() { document.getElementById('muse-message-modal').style.display = 'flex'; }
+function closeMuseModal() { document.getElementById('muse-message-modal').style.display = 'none'; }
+function closeModal() { document.getElementById('win-modal').style.display = 'none'; }
+function closeLockModal() { document.getElementById('lock-modal').style.display = 'none'; }
+
+initApp();
     }
 }
 
@@ -221,3 +288,4 @@ function closeLockModal() { document.getElementById('lock-modal').style.display 
 
 
 initApp();
+
