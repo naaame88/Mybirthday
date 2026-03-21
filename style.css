@@ -1,369 +1,302 @@
-/* -----------------------------------------------------------
-   1. Global Styles & Fonts
------------------------------------------------------------ */
-:root {
-    --bg-color: #F9F8F5;       /* 전체 배경: 따뜻한 미색 */
-    --point-pink: #EBD8D8;     /* 포인트 컬러: 더스티 핑크 */
-    --accent-grey: #A68A8A;    /* 강조색: 차분한 그레이 핑크 */
-    --text-main: #7A7A7A;      /* 기본 텍스트 색상 */
-}
+/* style.css */
 
-body {
+/* 전체적인 흑백 테마 설정 */
+body, html {
     margin: 0;
     padding: 0;
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    font-family: 'Montserrat', sans-serif;
-    display: flex;
-    justify-content: center;
-    overflow-x: hidden;
-    touch-action: manipulation;
-}
-
-/* 깃털 커서 (PC용) */
-#feather-cursor {
-    width: 35px;
-    height: 35px;
-    background: url('feather.png') no-repeat center/contain;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    display: none;
-}
-
-@media (min-width: 1024px) { 
-    #feather-cursor { display: block; } 
-}
-
-/* -----------------------------------------------------------
-   2. Layout Container
------------------------------------------------------------ */
-.container {
     width: 100%;
-    max-width: 430px;
-    min-height: 100vh;
-    padding: 60px 20px 40px;
-    box-sizing: border-box;
+    min-height: 100vh; /* height: 100% 대신 사용 */
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto !important; /* 스크롤 강제 허용 */
+}
+
+/* 1. 고양이를 중앙에 오게 하는 컨테이너 */
+.landing-container {
+    display: flex;
+    justify-content: center; /* 가로 중앙 */
+    align-items: center;    /* 세로 중앙 */
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+/* 2. 클릭 트리거 스타일 */
+.cat-trigger {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.4s ease-out; /* 클릭 시 약간 작아지는 효과 */
+}
+
+/* 마우스를 올렸을 때 클릭 트리거가 살짝 반응 */
+.cat-trigger:hover {
+    transform: scale(1.02); /* 2% 정도 커짐 */
+}
+
+/* 3. 중앙 고양이 이미지 스타일 */
+.central-cat {
+    max-width: 45vw;
+    height: auto;
+    /* 하얀 배경에서는 그림자를 검은색 계열로 연하게 줍니다 */
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.1)); 
+    transition: all 0.5s ease;
+}
+
+.cat-trigger:hover .central-cat {
+    filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.15));
+    transform: translateY(-10px); /* 위로 살짝 떠오르는 느낌 */
+}
+
+/* 4. 황금비 나선 SVG (옵션) 스타일 */
+.golden-spiral {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9); /* 중앙 배치 */
+    width: 110%; /* 고양이보다 약간 크게 */
+    height: 110%;
+    stroke: rgba(255, 255, 255, 0); /* 초기에는 투명 */
+    stroke-width: 0.5;
+    fill: none;
+    transition: stroke 0.6s, transform 0.6s ease-out;
+}
+
+/* 마우스를 올렸을 때 나선이 은은하게 나타남 */
+.cat-trigger:hover .golden-spiral {
+    stroke: rgba(255, 255, 255, 0.4); /* 흰색 나선 */
+    transform: translate(-50%, -50%) scale(1); /* 크기도 정상으로 */
+}
+
+/* 5. 전환 오버레이 스타일 (처음엔 숨김) */
+.transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #FFFFFF;
+    opacity: 0; /* 처음엔 투명 */
+    visibility: hidden; /* 상호작용 불가 */
+    z-index: 100; /* 가장 위에 */
+    transition: opacity 0.8s ease-in-out, visibility 0.8s;
+}
+
+/* 클래스가 추가되면 오버레이가 나타남 */
+.transition-overlay.active {
+    opacity: 1; /* 완전히 블랙으로 가림 */
+    visibility: visible;
+}
+
+.landing-container::before {
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    font-size: 12px;
+    letter-spacing: 5px;
+    color: #cccccc; /* 아주 연한 회색 */
+}
+
+/* --- Archive Page Styles --- */
+
+.archive-page {
     display: flex;
     flex-direction: column;
-    text-align: center;
+    align-items: center; /* 가로 중앙 정렬 */
+    width: 100%;
 }
 
-.nav-links {
-    font-size: 0.7rem;
+/* 네비게이션 */
+.archive-nav {
+    padding: 40px 0;
+}
+
+.back-button {
+    text-decoration: none;
+    color: #999;
+    font-size: 0.8rem;
     letter-spacing: 2px;
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: space-around;
-    opacity: 0.6;
+    transition: color 0.3s;
+    text-transform: uppercase;
 }
 
-/* -----------------------------------------------------------
-   3. Typography
------------------------------------------------------------ */
-.main-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.2rem;
-    font-weight: 300;
+.back-button:hover {
+    color: #000;
+}
+
+/* 헤더 영역 */
+.archive-header, .diary-list, .archive-footer {
+    width: 100%;
+    max-width: 800px;    /* PC에서 너무 퍼지지 않게 제한 */
+    margin: 0 auto;      /* 중앙 배치 */
+    padding: 0 20px;     /* 모바일 좌우 여백 */
+    box-sizing: border-box;
+}
+
+.archive-header {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.archive-header .subtitle {
+    font-size: 0.7rem;
+    letter-spacing: 5px;
+    color: #bbb;
+    margin-bottom: 10px;
+}
+
+.archive-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 400;
     margin: 0;
-    letter-spacing: 1px;
+    letter-spacing: -1px;
 }
 
-.sub-title {
-    font-family: 'Pinyon Script', cursive;
-    font-size: 1.3rem;
-    color: var(--accent-grey);
-    margin-top: 5px;
+.divider {
+    width: 40px;
+    height: 1px;
+    background-color: #000;
+    margin: 30px auto;
 }
 
-/* -----------------------------------------------------------
-   4. Hero Section (Boots & Countdown)
------------------------------------------------------------ */
-.hero {
-    margin: 40px 0;
-}
-
-.countdown {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-}
-
-.image-frame {
-    width: 240px;
-    height: 340px;
+/* 일기 리스트 아이템 */
+.diary-list {
+    max-width: 900px;
     margin: 0 auto;
-    border: 0.5px solid rgba(209, 194, 194, 0.5);
-    border-radius: 120px;
+}
+
+.diary-item {
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: radial-gradient(circle, rgba(235,216,216,0.3) 0%, rgba(249,248,245,0) 70%);
+    justify-content: space-between;
+    width: 100%;
+    padding: 30px 0;    /* 좌우 마진 대신 패딩 사용 */
+    margin: 0;          /* 기존의 margin: 0 40px 삭제 */
+    border-bottom: 1px solid #eee;
 }
 
-.floating-boots {
-    width: 85%;
-    animation: float 4s ease-in-out infinite;
+.diary-item:hover {
+    transform: translateX(15px); /* 호버 시 우측으로 살짝 이동 */
 }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
+.item-info {
+    flex: 1;
 }
 
-/* -----------------------------------------------------------
-   5. Interaction (Lucky Draw) - 수정된 부분
------------------------------------------------------------ */
-.interaction {
-    margin-bottom: 50px;
+.item-info .date {
+    font-size: 0.7rem;
+    color: #aaa;
+    letter-spacing: 2px;
 }
 
-.btn-pink {
-    background-color: var(--point-pink);
-    color: white;
-    border: none;
-    padding: 14px 35px;
-    border-radius: 25px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(235, 216, 216, 0.4);
-    transition: 0.3s;
+.item-info .title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-top: 10px;
+    font-weight: 400;
 }
 
-/* 시크릿 박스 타이머 스타일 (Next Magic 문구 대체) */
-#lucky-timer-msg {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.9rem;
-    margin-top: 15px;
-    color: var(--accent-grey);
-    letter-spacing: 1px;
-    font-weight: 500;
+/* 썸네일 (황금비 1:1 또는 4:3 비율 느낌) */
+.item-thumbnail {
+    width: 120px;
+    height: 80px;
+    margin-left: 20px;  /* 텍스트와의 간격만 유지 */
+    margin-right: 0;    /* 오른쪽 치우침 방지 */
+    flex-shrink: 0;
 }
 
-/* -----------------------------------------------------------
-   6. Guestbook Section
------------------------------------------------------------ */
-.guestbook-section {
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-    padding-top: 40px;
-    text-align: left;
+.thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지를 꽉 채우되 비율 유지 */
+    filter: grayscale(100%); /* 흑백 처리하여 미니멀함 강조 */
+    transition: filter 0.5s;
 }
 
-.section-label {
-    text-align: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    margin-bottom: 30px;
-}
-
-.simple-list {
-    max-height: 350px;
-    overflow-y: auto;
-    margin-bottom: 30px;
-    padding: 0 10px;
-}
-
-.message-item {
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 1px dotted var(--point-pink);
-    animation: fadeIn 0.6s ease-out;
-}
-
-.msg-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
-    font-size: 0.85rem;
-    color: var(--accent-grey);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.msg-text {
-    font-family: 'Nanum Myeongjo', serif;
-    font-size: 0.95rem;
-    line-height: 1.7;
-    margin-top: 8px;
-    color: #555;
-    word-break: break-all;
-}
-
-.input-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.input-field {
-    border: none;
-    border-bottom: 1px solid var(--point-pink);
-    background: transparent;
-    padding: 10px 5px;
-    font-family: 'Nanum Myeongjo', serif;
-    outline: none;
-    color: var(--text-main);
-}
-
-.name-input {
-    width: 40%;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.9rem;
-}
-
-.text-input {
-    resize: none;
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
-
-.write-btn {
-    align-self: flex-end;
-    background-color: transparent;
-    border: 1px solid var(--point-pink);
-    color: var(--accent-grey);
-    padding: 8px 25px;
-    border-radius: 20px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.75rem;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-/* -----------------------------------------------------------
-   7. Lucky Boots Game Section
------------------------------------------------------------ */
-.lucky-game-section {
-    margin-top: 50px;
-    padding: 30px 15px;
-    background: rgba(235, 216, 216, 0.15);
-    border-radius: 25px;
-    text-align: center;
-}
-
-.game-info {
-    font-size: 0.8rem;
-    margin-bottom: 20px;
+.diary-item:hover {
+    transform: none;    /* 옆으로 밀리는 효과가 정렬을 깨뜨릴 수 있어 제거 */
     opacity: 0.7;
 }
 
-.box-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-}
-
-.box-item {
-    cursor: pointer;
-    transition: transform 0.2s;
-    position: relative;
-    display: flex;
-    align-items: center; 
-    justify-content: center;
-    /* 상자 영역의 높이를 확보하여 레이아웃 고정 */
-    min-height: 110px; 
-}
-
-.box-item img {
+.empty-thumb {
     width: 100%;
-    max-width: 100px;
-    display: block;
-    transition: opacity 0.4s, transform 0.4s;
-    z-index: 2;
-    /* 배경색을 추가하여 뒤쪽 result-text가 비치지 않게 가림 */
-    background-color: var(--bg-color); 
+    height: 100%;
+    background: linear-gradient(45deg, #f3f3f3 25%, #f9f9f9 25%, #f9f9f9 50%, #f3f3f3 50%, #f3f3f3 75%, #f9f9f9 75%, #f9f9f9 100%);
+    background-size: 10px 10px;
 }
 
-.box-item.opened img {
-    opacity: 0;
-    transform: scale(0.8);
-    pointer-events: none;
+.arrow {
+    font-size: 1.2rem;
+    color: #eee;
+    transition: color 0.3s;
 }
 
-.result-text {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: var(--accent-grey);
-    z-index: 1; /* 이미지보다 뒤에 배치 */
+.diary-item:hover .arrow {
+    color: #000;
 }
 
-/* 부츠 이미지 호버 효과 추가 */
-.floating-boots:hover {
-    transform: scale(1.05);
-    filter: brightness(1.1);
-}
-
-/* 팝업 모달 */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    z-index: 10000;
-    align-items: center; 
-    justify-content: center;
-}
-
-.modal-content {
-    background: white;
-    width: 90%; /* 가로 넓이 확장 */
-    max-width: 500px; /* 최대 넓이 증가 */
-    max-height: 80vh; /* 화면 높이의 80%까지만 차지 */
-    overflow-y: auto; /* 내용 길면 스크롤 생성 */
-    padding: 40px 25px;
-    border-radius: 20px;
+/* 푸터 */
+.archive-footer {
+    padding: 100px 0 50px;
     text-align: center;
-    animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-size: 0.7rem;
+    color: #ccc;
+    letter-spacing: 2px;
 }
 
-.win-msg { 
-    font-size: 0.85rem;  /* 글자 크기를 기존보다 줄임 */
-    line-height: 1.8;    /* 줄 간격을 넓게 유지하여 가독성 확보 */
-    color: #555; 
-    word-break: keep-all; /* 단어 단위로 줄바꿈되어 더 깔끔하게 보임 */
-}
-
-.win-time {
-    background: #f4f4f4;
-    padding: 12px;
-    margin: 20px 0;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    font-size: 0.85rem;
-    color: #333;
+/* 관리자 페이지 섹션 간격 조절 */
+.content-section {
+    background: #f9f9f9;
     border-radius: 8px;
-    border: 1px dashed var(--point-pink);
+    margin-bottom: 30px !important;
 }
 
-.win-img-frame img {
-    width: 100px;
-    margin-bottom: 15px;
+/* 영문 다이어리 본문 스타일 최적화 */
+.item-text, .section-description {
+    /* 1. 글자 크기: 모바일에서도 시원하게 보이도록 설정 */
+    font-size: 1.2rem; 
+    
+    /* 2. 가독성: 영문은 줄 간격이 넓어야 에세이 느낌이 납니다 */
+    line-height: 1.75; 
+    
+    /* 3. 자간 및 단어 간격: 영문 가독성의 핵심 */
+    letter-spacing: 0.01em;
+    word-spacing: 0.05em;
+
+    /* 4. 폰트: 시스템 폰트보다 세련된 느낌을 위해 (이미 연결된 폰트가 있다면 적용됨) */
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 300; /* 너무 두껍지 않게 설정하여 세련미 강조 */
+    
+    color: #2c2c2c;
+    margin-top: 0;
+    margin-bottom: 0;
+    
+    /* 영문은 양쪽 정렬(justify)을 하면 모바일에서 간격이 벌어져 어색할 수 있으므로 왼쪽 정렬 권장 */
+    text-align: left; 
 }
 
-.close-btn {
-    margin-top: 20px;
-    background-color: var(--point-pink);
-    border: none;
-    padding: 10px 25px;
-    border-radius: 20px;
-    color: white;
-    cursor: pointer;
+/* 상세 페이지 이미지에 부드러운 호버 효과와 그림자 추가 */
+.story-section img {
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.6s;
+    filter: grayscale(20%); /* 약간의 그레이스케일로 차분한 분위기 */
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+.story-section img:hover {
+    transform: scale(1.02);
+    filter: grayscale(0%);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05); /* 아주 은은한 그림자 */
 }
 
-@keyframes modalPop {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+/* 첫 글자 강조 (Drop Cap) - 영문 일기에서 매우 고급스러움 */
+.section-description::first-letter {
+    float: left;
+    font-size: 3.5rem;
+    line-height: 1;
+    padding-right: 10px;
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
 }
-
-.simple-list::-webkit-scrollbar { width: 3px; }
-.simple-list::-webkit-scrollbar-thumb { background-color: var(--point-pink); border-radius: 10px; }

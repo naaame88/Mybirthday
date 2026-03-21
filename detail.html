@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="detail-page" style="background: #fff; color: #000;">
+    <nav style="padding: 20px;">
+        <a href="archive.html" style="text-decoration: none; color: #000;">← Back to Archive</a>
+    </nav>
+
+    <main style="max-width: 800px; margin: 0 auto; padding: 40px 20px;">
+        <p id="detail-date" style="letter-spacing: 2px; color: #aaa; font-size: 0.8rem;"></p>
+        <h1 id="detail-title" style="font-family: 'Playfair Display', serif; font-size: 3rem; margin: 20px 0;"></h1>
+    
+        <div id="detail-content" style="line-height: 1.8; font-size: 1.1rem; white-space: pre-wrap; font-family: 'Montserrat', sans-serif;">
+        </div>
+
+        <div id="detail-content" ...></div> <section id="comment-section" style="margin-top: 80px; border-top: 1px solid #000; padding-top: 40px;">
+            <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 25px; letter-spacing: 1px;">Comments</h3>
+            
+            <div id="comments-list" style="margin-bottom: 50px;">
+                <p style="color: #aaa; font-size: 0.9rem;">Loading comments...</p>
+            </div>
+        
+            <form id="comment-form" style="display: flex; flex-direction: column; gap: 15px; max-width: 500px;">
+                <input type="text" id="comment-nickname" placeholder="Your Nickname" required 
+                       style="border: 1px solid #000; padding: 12px; font-family: 'Montserrat', sans-serif; outline: none;">
+                
+                <textarea id="comment-text" placeholder="Leave a record..." required rows="4"
+                          style="border: 1px solid #000; padding: 12px; font-family: 'Montserrat', sans-serif; resize: none; outline: none;"></textarea>
+                
+                <button type="submit" id="comment-submit-btn" 
+                        style="background: #000; color: #fff; border: none; padding: 12px; cursor: pointer; font-weight: bold; letter-spacing: 1px; transition: 0.3s;">
+                    POST COMMENT
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <script type="importmap">
+        {
+          "imports": {
+            "firebase/app": "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js",
+            "firebase/firestore": "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"
+          }
+        }
+    </script>
+    <script type="module" src="detail.js"></script>
+</body>
+</html>
