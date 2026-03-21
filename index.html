@@ -2,28 +2,140 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Fibonacci Feline - Archive</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ethereal Birthday | 01.28</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500&family=Montserrat:wght@300&family=Nanum+Myeongjo&family=Pinyon+Script&display=swap" rel="stylesheet">
 </head>
-<body class="entry-page">
+<body>
 
-    <div id="landing-container" class="landing-container">
+    <div id="feather-cursor"></div>
+
+    <main class="container">
+        <header>
+            <h1 class="main-title">ETHEREAL BIRTHDAY</h1>
+            <p class="sub-title">Jan 28, Celebrating the Winter Muse</p>
+        </header>
+
+        <section class="hero">
+            <div class="countdown" id="countdown">D-00 : 00 : 00 : 00</div>
+            <div class="image-frame">
+                <img src="boots.png" alt="Winter Boots" class="floating-boots" onclick="showMuseMessage()" style="cursor: pointer;">
+            </div>
+        </section>
+
+        <section class="interaction">
+            <button id="lucky-button" class="btn-pink" onclick="tryLuckyDraw()">Unlock the Secret Box</button>
+            <p id="lucky-timer-msg">Next Magic starts at 01:28</p>
+        </section>
+
+        <section class="guestbook-section">
+            <h2 class="section-label">Whispers to Muse</h2>
+            
+            <div id="guestbook-list" class="simple-list">
+                <div class="empty-msg">Please leave a warm message of celebration...</div>
+            </div>
         
-        <a href="archive.html" class="cat-trigger" id="cat-click">
-            
-            <img src="images/cat-main.png" alt="Black Cat Archive" class="central-cat" id="main-cat-img">
-            
-            <svg class="golden-spiral" viewBox="0 0 100 100">
-                <path d="M 0 100 ... " /> 
-            </svg>
-            
-        </a>
+            <div class="input-container">
+                <input type="text" id="visitor-name" placeholder="Name" class="input-field name-input">
+                <textarea id="guest-input" placeholder="Please leave a warm message of celebration..." class="input-field text-input" rows="4"></textarea>
+                <button onclick="addMessage()" class="write-btn">Write</button>
+            </div>
+        </section>
 
-        <div class="transition-overlay" id="screen-overlay"></div>
+        <section class="lucky-game-section">
+            <h2 class="section-label">Find the Muse's Boots</h2>
+            <p class="game-info">하루에 두 번의 기회! 상자를 클릭해 보세요. (기회: <span id="chance-count">2</span>/2)</p>
+            
+            <div id="box-grid" class="box-grid"></div>
+        
+            <div id="win-modal" class="modal">
+                <div class="modal-content">
+                    <h2 class="win-title">JACKPOT!</h2>
+                    <div class="win-img-frame">
+                        <img src="boots.png" alt="Winning Boots">
+                    </div>
+                    <p class="win-msg">부츠를 찾으셨습니다!</p>
+                    <div id="win-time-display" class="win-time"></div>
+                    <p class="win-instruction">위 당첨 시각이 보이도록 캡쳐하여<br>카페 댓글로 인증해 주세요!</p>
+                    <button onclick="closeModal()" class="close-btn">Close</button>
+                </div>
+            </div>
 
-    </div>
+            <div id="muse-message-modal" class="modal">
+                <div class="modal-content">
+                    <h2 class="win-title">Message from Muse</h2>
+                    <div class="win-msg" style="text-align: center; font-family: 'Nanum Myeongjo', serif;">
+                        <br>안녕하세요, 은연입니다!<br>
+                        먼저, 이벤트를 위해 방문해주신<br>
+                        모든 분들께 감사의 말씀을 전합니다.<br><br>
 
-    <script src="script.js"></script>
+                        매년 돌아오는 생일이지만,<br>
+                        항상 생일은 특별하게 보내고 싶은 마음이 드는 것 같아요.<br>
+                        그래서 이번 생일에는<br>
+                        이렇게 사이트를 준비해 보았습니다 ㅎ.ㅎ<br><br>
+
+                        어딘가 내놓기에는 어설픈 실력이지만,<br>
+                        열심히 만들었으니, 좋게 봐주시면 감사하겠습니다.<br>
+                        그리고 방문해주신 모든 분들 정말 감사드리며,<br>
+                        2026년 새해 복 많이 받으시고,<br>
+                        늘 행복이 가득하시길 바랍니다!<br><br><br>
+
+                        특히<br>
+                        우리 플로라팸원들<br>
+                        (혜,핑언니,깡이,마후,비례)<br>
+                        (삭이,수집이,여름이,은시,지니,혜비)<br><br>
+
+                        내 소중한 사람들
+                        (댯님,응님,멈머님,옹뚜니)<br>
+                        (닝닝님,시아님,서아님,비이언니)<br><br>
+
+                        너처럼님,수님,찬섭이,루루맘님,<br>
+                        부미,뚜뚜님 그 외 함께해주는 모든 친님들까지<br><br>
+
+                        항상 너무나 감사하고, 함께라서 행복합니다!<br><br>
+
+                        그리고 채은아, 서연아, 포미 같이 해줘서 고맙다 ㅎ.ㅎ<br>
+                        28일에 딸기 생크림 케이크 사다주라 ㅎ<br><br><br>
+
+                        <strong>모두 2026년 새해 복 많이 받으세요! 감사합니다!</strong><br>
+                    </div>
+                    <button onclick="closeMuseModal()" class="close-btn">Close</button>
+                </div>
+            </div>
+
+            <div id="lock-modal" class="modal">
+                <div class="modal-content">
+                    <h2 id="lock-title" class="win-title">Locked</h2>
+                    <p id="lock-msg" class="win-msg"></p>
+                    <button onclick="closeLockModal()" class="close-btn">Close</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } 
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+      
+        const firebaseConfig = {
+            apiKey: "AIzaSyAQoqqWhV1PPZoU_rMt2sK2BbDtWO-qlmI",
+            authDomain: "my-birthday-site-6e2cd.firebaseapp.com",
+            projectId: "my-birthday-site-6e2cd",
+            storageBucket: "my-birthday-site-6e2cd.firebasestorage.app",
+            messagingSenderId: "545429691530",
+            appId: "1:545429691530:web:ffd621005d4e39cc35e173",
+            measurementId: "G-TZDVRDFY54"
+        };
+      
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+      
+        window.db = db;
+        window.fbUtils = { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp };
+    </script>
+      
+    <script src="script.js" defer></script>
 </body>
 </html>
